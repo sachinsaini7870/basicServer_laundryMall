@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Laundary Mart</title>
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+     <link rel="stylesheet" href="/css/styles.css">
+
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="container">
+        <div class="logo">
+          <h1>Logo</h1>
+        </div>
+
+        <div class="menu-toggle" id="menuToggle">
+          <ion-icon name="menu-outline"></ion-icon>
+        </div>
+
+        <ul class="nav-links" id="navLinks">
+          <li><a href="/">Home</a></li>
+          <li><a href="/services">Services</a></li>
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/contact">Contact Us</a></li>
+        </ul>
+
+        <div class="user-info">
+          <ion-icon name="person-circle-outline"></ion-icon>
+          <span>Username</span>
+        </div>
+      </div>
+    </nav>
+
+    
+
+    <!-- Booking Services Section -->
+    <section class="services-section" id="services">
+      <div class="left-div container">
+        <div class="services-heading">
+          <h2>Our Services</h2>
+          <p>
+            Click On The Add To Cart Button To Add The Services To Your Cart
+          </p>
+        </div>
+        <div class="services-list">
+          <div class="service-item">
+            <div class="service-info">
+              <div class="service-name">
+                <img src="assets/icons/shirt.png" alt="shirt" /> Dry Cleaning
+              </div>
+              <div class="service-price">
+                <span class="rupee-symbol">₹</span>200.00
+              </div>
+            </div>
+            <div class="service-controls">
+              <button
+                class="btn add-btn"
+                onclick="toggleService(this, 'Dry Cleaning', 200)"
+              >
+                Add Item <i class="fas fa-plus"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="service-item">
+            <div class="service-info">
+              <div class="service-name">
+                <img src="assets/icons/wash.png" alt="bucket" /> Wash & Fold
+              </div>
+              <div class="service-price">
+                <span class="rupee-symbol">₹</span>100.00
+              </div>
+            </div>
+            <div class="service-controls">
+              <button
+                class="btn add-btn"
+                onclick="toggleService(this, 'Wash & Fold', 100)"
+              >
+                Add Item <i class="fas fa-plus"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="service-item">
+            <div class="service-info">
+              <div class="service-name">
+                <img src="assets/icons/iron.png" alt="Iron" />Ironing
+              </div>
+              <div class="service-price">
+                <span class="rupee-symbol">₹</span>30.00
+              </div>
+            </div>
+            <div class="service-controls">
+              <button
+                class="btn add-btn"
+                onclick="toggleService(this, 'Ironing', 30)"
+              >
+                Add Item <i class="fas fa-plus"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="service-item">
+            <div class="service-info">
+              <div class="service-name">
+                <img src="assets/icons/splatter.png" alt="stain" /> Stain
+                Removal
+              </div>
+              <div class="service-price">
+                <span class="rupee-symbol">₹</span>500.00
+              </div>
+            </div>
+            <div class="service-controls">
+              <button
+                class="btn add-btn"
+                onclick="toggleService(this, 'Stain Removal', 500)"
+              >
+                Add Item <i class="fas fa-plus"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="service-item">
+            <div class="service-info">
+              <div class="service-name">
+                <img src="assets/icons/leather.png" alt="Leather" /> Leather
+                & Suede Cleaning
+              </div>
+              <div class="service-price">
+                <span class="rupee-symbol">₹</span>999.00
+              </div>
+            </div>
+            <div class="service-controls">
+              <button
+                class="btn add-btn"
+                onclick="toggleService(this, 'Leather & Suede Cleaning', 999)"
+              >
+                Add Item <i class="fas fa-plus"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="service-item">
+            <div class="service-info">
+              <div class="service-name">
+                <img
+                  src="assets/icons/wedding-dress.png"
+                  alt="wedding-dress"
+                />
+                Wedding Dress Cleaning
+              </div>
+              <div class="service-price">
+                <span class="rupee-symbol">₹</span>2800.00
+              </div>
+            </div>
+            <div class="service-controls">
+              <button
+                class="btn add-btn"
+                onclick="toggleService(this, 'Wedding Dress Cleaning', 2800)"
+              >
+                Add Item <i class="fas fa-plus"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="services-tooltip">
+          <ion-icon
+            name="information-circle-outline"
+            style="font-size: 2.5rem"
+          ></ion-icon>
+          Add the items to the cart and book now
+        </div>
+      </div>
+
+      <!-- Right div -->
+      <div class="right-div container">
+        <div class="cart-column">
+          <!-- Top Part - Cart -->
+          <div class="cart-container">
+            <h2>Added Items</h2>
+            <div class="cart-headers">
+              <div>S.No</div>
+              <div class="header-item">
+                <div>Service Name</div>
+                <div>Price</div>
+              </div>
+            </div>
+            <div class="cart-items" id="cartItems">
+              <div class="empty-cart">
+                <ion-icon
+                  name="information-circle-outline"
+                  style="font-size: 2.5rem"
+                ></ion-icon>
+                <p>No Items Added</p>
+                <p>Add Items to the cart from the services bar</p>
+              </div>
+            </div>
+
+            <div class="total-section">
+              <p>Total Amount:</p>
+              <span id="totalAmount">₹0</span>
+            </div>
+          </div>
+
+          <!-- Bottom Part - Booking Form -->
+          <div class="booking-form">
+            <h3>Book Now</h3>
+            <form id="bookingForm" class="form-container">
+              <div class="form-group fname">
+                <label for="fullName">Full Name</label><br />
+                <input
+                  type="text"
+                  id="fullName"
+                  placeholder="John Doe"
+                  required
+                />
+              </div>
+
+              <div class="form-group email">
+                <label for="email"> Email Address</label><br />
+                <input
+                  type="email"
+                  id="email"
+                  placeholder="mailid@gmail.com"
+                  required
+                />
+              </div>
+
+              <div class="form-group phone">
+                <label for="phone"> Phone Number</label><br />
+                <input
+                  type="tel"
+                  id="phone"
+                  placeholder="+91 98XXXXXX10"
+                  required
+                />
+              </div>
+
+              <button type="submit" class="book-now-btn pulse">
+                Booking Now
+              </button>
+            </form>
+
+            <div class="success-message" id="successMessage"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+   
+
+    <!-- Footer -->
+    <footer class="footer-section" id="contact">
+      <div class="container footer-items">
+        <div class="info">
+          <h2>Logo</h2>
+          <p><strong>About us</strong></p>
+          <p>
+            Lorem ipsum dolor sit amet <br />
+            consectetur adipisicing elit.
+          </p>
+        </div>
+        <div class="links">
+          <h3>Important Links</h3>
+          <ul>
+            <li>About us</li>
+            <li>Contact us</li>
+            <li>Privacy Policy</li>
+            <li>Terms of use</li>
+            <li>Refund Policy</li>
+          </ul>
+        </div>
+        <div class="contact">
+          <h3>Contact</h3>
+          <p>mail@site.com</p>
+          <p>+91 91234 56780</p>
+        </div>
+        <div class="solial-links">
+          <h3>Folow Us</h3>
+          <ul>
+            <li><ion-icon name="logo-instagram"></ion-icon></li>
+            <li><ion-icon name="logo-facebook"></ion-icon></li>
+            <li><ion-icon name="logo-twitter"></ion-icon></li>
+            <li><ion-icon name="logo-youtube"></ion-icon></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Ionic Icons -->
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="/js/script.js"></script>
+  </body>
+</html>
