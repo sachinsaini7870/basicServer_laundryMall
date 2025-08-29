@@ -1,3 +1,19 @@
+// Planning:
+// - Serve static files from /public directory
+// - Map clean URLs (/, /about, /services, /contact) to HTML files
+// - Handle 404 and server errors gracefully
+// - Set correct MIME types for responses
+// - Listen on configurable port
+
+// Working:
+// - Uses Node.js http, fs, path, url modules
+// - MIME_TYPES object maps file extensions to content types
+// - routes object maps clean URLs to HTML files
+// - Checks if requested path is a directory, serves index.html if so
+// - Reads requested file and sends response
+// - Handles file not found (404) and server errors (500)
+// - Starts server and logs running URL
+
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
