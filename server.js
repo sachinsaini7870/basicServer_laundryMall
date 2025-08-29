@@ -1,22 +1,87 @@
 const http = require('http');
+const fs = require('fs');
 const path = require('path');
-const server = require('./api/index.js');
+const url = require('url');
 
-// Set the port for local and production
 const PORT = process.env.PORT || 3000;
+const PUBLIC_DIR = path.join(__dirname, 'public');
 
-// Production-ready server configuration
-const serverOptions = {
-    keepAliveTimeout: 61 * 1000,
-    headersTimeout: 65 * 1000
+const MIME_TYPES = {
+  '.html': 'text/html',
+  '.css': 'text/css',
+  '.js': 'application/javascript',
+  '.json': 'application/json',
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.gif': 'image/gif',
+  '.svg': 'image/svg+xml',
+  '.ico': 'image/x-icon'
 };
 
-// Create server with options
-const httpServer = http.createServer(serverOptions, server);
+// Route mapping for clean URLs
+const routes = {
+  '/': 'index.html',
+  '/about': 'about.html',
+  '/services': 'services.html',
+  '/contact': 'contact.html'
+};
 
-// Start the server
-httpServer.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}/`);
+const server = http.createServer((req, res) => {
+  const parsedUrl = url.parse(req.url);
+  let pathname = parsedUrl.pathname;
+  
+  // Handle root route
+  if (pathname === '/') {
+    pathname = '/index.html';
+  }
+  
+  // Check if this is a route we've mapped
+  if (routes[pathname]) {
+    pathname = '/' + routes[pathname];
+  }
+  
+  // Get the file extension
+  const extname = path.extname(pathname).toLowerCase();
+  
+  // Set the content type based on file extension
+  const contentType = MIME_TYPES[extname] || 'application/octet-stream';
+  
+  // Build the full file path
+  let filePath = path.join(PUBLIC_DIR, pathname);
+  
+  // If the path is a directory, look for index.html
+  if (fs.existsSync(filePath) && fs.statSync(filePath).isDirectory()) {
+    filePath = path.join(filePath, 'index.html');
+  }
+  
+  // Read and serve the file
+  fs.readFile(filePath, (err, data) => {
+    if (err) {
+      if (err.code === 'ENOENT') {
+        // Page not found
+        fs.readFile(path.join(PUBLIC_DIR, '404.html'), (err, data) => {
+          if (err) {
+            res.writeHead(404, { 'Content-Type': 'text/plain' });
+            res.end('404 - Page Not Found');
+          } else {
+            res.writeHead(404, { 'Content-Type': 'text/html' });
+            res.end(data);
+          }
+        });
+      } else {
+        // Server error
+        res.writeHead(500, { 'Content-Type': 'text/plain' });
+        res.end('500 - Internal Server Error: ' + err.code);
+      }
+    } else {
+      // Successful response
+      res.writeHead(200, { 'Content-Type': contentType });
+      res.end(data);
+    }
+  });
 });
 
-module.exports = httpServer;
+server.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}/`);
+});
