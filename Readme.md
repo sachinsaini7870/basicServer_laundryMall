@@ -3,6 +3,11 @@
 A professional laundry service website built with vanilla Node.js, featuring a complete booking system, responsive design, and efficient static file serving.
 
 
+## Deploy Link
+
+URL :  https://basic-server-laundry-mall.vercel.app/
+
+
 ## 🛣️ API Routes
 
 | Route | Method | File Served | Description |
